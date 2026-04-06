@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Attendance Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 College Attendance Management System</h1>
+            <p>Manage students, subjects, timetable, and track attendance efficiently</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('dashboard')">📊 Dashboard</button>
+            <button class="nav-tab" onclick="switchTab('students')">👥 Students</button>
+            <button class="nav-tab" onclick="switchTab('subjects')">📖 Subjects</button>
+            <button class="nav-tab" onclick="switchTab('timetable')">📅 Timetable</button>
+            <button class="nav-tab" onclick="switchTab('attendance')">✅ Mark Attendance</button>
+            <button class="nav-tab" onclick="switchTab('reports')">📈 Reports</button>
+        </div>
+
+        <div class="content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <h2>Dashboard Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3 id="totalStudents">0</h3>
+                        <p>Total Students</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="totalSubjects">0</h3>
+                        <p>Total Subjects</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="todayAttendance">0%</h3>
+                        <p>Today's Attendance</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="totalClasses">0</h3>
+                        <p>Classes Today</p>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>Today's Schedule</h3>
+                    <div id="todaySchedule"></div>
+                </div>
+            </div>
+
+            <!-- Students Tab -->
+            <div id="students" class="tab-content">
+                <div class="form-section">
+                    <h3>Add New Student</h3>
+                    <div class="success-message" id="studentSuccess">Student added successfully!</div>
+                    <form id="studentForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Student Name *</label>
+                                <input type="text" id="studentName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Roll Number *</label>
+                                <input type="text" id="rollNumber" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="studentEmail">
+                            </div>
+                            <div class="form-group">
+                                <label>Class/Section</label>
+                                <input type="text" id="studentClass" placeholder="e.g., CSE-A">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Student</button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Roll Number</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Class</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsList"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Subjects Tab -->
+            <div id="subjects" class="tab-content">
+                <div class="form-section">
+                    <h3>Add New Subject</h3>
+                    <div class="success-message" id="subjectSuccess">Subject added successfully!</div>
+                    <form id="subjectForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Subject Code *</label>
+                                <input type="text" id="subjectCode" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Subject Name *</label>
+                                <input type="text" id="subjectName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Instructor</label>
+                            <input type="text" id="instructor">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Subject</button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subject Code</th>
+                                <th>Subject Name</th>
+                                <th>Instructor</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subjectsList"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Timetable Tab -->
+            <div id="timetable" class="tab-content">
+                <div class="form-section">
+                    <h3>Add Class to Timetable</h3>
+                    <div class="success-message" id="timetableSuccess">Class added to timetable!</div>
+                    <form id="timetableForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Day *</label>
+                                <select id="day" required>
+                                    <option value="">Select Day</option>
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Subject *</label>
+                                <select id="timetableSubject" required></select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Start Time *</label>
+                                <input type="time" id="startTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label>End Time *</label>
+                                <input type="time" id="endTime" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add to Timetable</button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Subject</th>
+                                <th>Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="timetableList"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Attendance Tab -->
+            <div id="attendance" class="tab-content">
+                <div class="form-section">
+                    <h3>Mark Attendance for Today</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Select Subject</label>
+                            <select id="attendanceSubject" onchange="loadStudentsForAttendance()">
+                                <option value="">Select Subject</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" id="attendanceDate" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="attendanceGrid" class="attendance-grid"></div>
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="btn btn-success" onclick="saveAttendance()">Save Attendance</button>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reports" class="tab-content">
+                <div class="form-section">
+                    <h3>Attendance Reports</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Select Student</label>
+                            <select id="reportStudent" onchange="generateReport()">
+                                <option value="">All Students</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Subject</label>
+                            <select id="reportSubject" onchange="generateReport()">
+                                <option value="">All Subjects</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="reportContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
